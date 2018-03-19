@@ -1,0 +1,25 @@
+<component name="libraryTable">
+  <library name="org.litote.kmongo:kmongo:3.5.1" type="repository">
+    <properties maven-id="org.litote.kmongo:kmongo:3.5.1" />
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/org/litote/kmongo/kmongo/3.5.1/kmongo-3.5.1.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/org/litote/kmongo/kmongo-core/3.5.1/kmongo-core-3.5.1.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/org/litote/kmongo/kmongo-shared/3.5.1/kmongo-shared-3.5.1.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/org/litote/kmongo/kmongo-id/3.5.1/kmongo-id-3.5.1.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/org/jetbrains/kotlin/kotlin-reflect/1.1.60/kotlin-reflect-1.1.60.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/org/mongodb/mongodb-driver/3.5.0/mongodb-driver-3.5.0.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/org/mongodb/bson/3.5.0/bson-3.5.0.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/org/mongodb/mongodb-driver-core/3.5.0/mongodb-driver-core-3.5.0.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/org/litote/kmongo/kmongo-jackson-mapping/3.5.1/kmongo-jackson-mapping-3.5.1.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/org/litote/bson4jackson-fork/2.8.0/bson4jackson-fork-2.8.0.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/com/fasterxml/jackson/module/jackson-module-kotlin/2.9.2/jackson-module-kotlin-2.9.2.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/com/fasterxml/jackson/core/jackson-annotations/2.9.0/jackson-annotations-2.9.0.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/com/fasterxml/jackson/core/jackson-databind/2.9.2/jackson-databind-2.9.2.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/com/fasterxml/jackson/core/jackson-core/2.9.2/jackson-core-2.9.2.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/org/jetbrains/kotlin/kotlin-stdlib/1.1.60/kotlin-stdlib-1.1.60.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/org/jetbrains/annotations/13.0/annotations-13.0.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
