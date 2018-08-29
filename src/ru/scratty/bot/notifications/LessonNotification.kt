@@ -1,13 +1,13 @@
 package ru.scratty.bot.notifications
 
-import ru.scratty.db.DBHandler
+import ru.scratty.db.DBHandlerMongo
 import java.util.*
 
 class LessonNotification(time: Time, private val numberLesson: Int,
                          private val send: (chatId: Long, text: String) -> Unit): Notification(time) {
 
     override fun execute() {
-        val db = DBHandler.INSTANCE
+        val db = DBHandlerMongo.INSTANCE
         val users = db.getUsers()
         val calendar = GregorianCalendar()
 

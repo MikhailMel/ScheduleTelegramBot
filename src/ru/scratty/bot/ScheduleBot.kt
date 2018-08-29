@@ -11,14 +11,14 @@ import org.telegram.telegrambots.bots.TelegramLongPollingBot
 import org.telegram.telegrambots.exceptions.TelegramApiException
 import ru.scratty.bot.commands.*
 import ru.scratty.bot.notifications.LessonNotification
-import ru.scratty.db.DBHandler
+import ru.scratty.db.DBHandlerMongo
 import ru.scratty.utils.Config
 import java.text.SimpleDateFormat
 import java.util.*
 
 class ScheduleBot : TelegramLongPollingBot() {
 
-    private val db = DBHandler.INSTANCE
+    private val db = DBHandlerMongo.INSTANCE
 
     private val commands = arrayListOf(SelectGroupCommand(), DayScheduleCommand(), CreateGroupCommand(),
             AddLessonCommand(), WeekScheduleCommand(), CallsScheduleCommand(), SettingsCommand(), SendMessageById())
