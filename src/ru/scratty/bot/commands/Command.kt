@@ -5,11 +5,12 @@ import org.telegram.telegrambots.api.objects.replykeyboard.ReplyKeyboard
 import org.telegram.telegrambots.api.objects.replykeyboard.ReplyKeyboardMarkup
 import org.telegram.telegrambots.api.objects.replykeyboard.buttons.KeyboardRow
 import ru.scratty.db.DBHandler
+import ru.scratty.db.DBHandlerMongo
 import ru.scratty.db.User
 
 abstract class Command(private val containsWords: Regex) {
 
-    protected var db: DBHandler = DBHandler.INSTANCE
+    protected var db: DBHandler = DBHandlerMongo.INSTANCE
     protected var text: String = ""
 
     var isUpdate = false
