@@ -1,9 +1,9 @@
 package ru.scratty.bot.commands
 
-import org.telegram.telegrambots.api.objects.Update
-import org.telegram.telegrambots.api.objects.replykeyboard.InlineKeyboardMarkup
-import org.telegram.telegrambots.api.objects.replykeyboard.ReplyKeyboard
-import org.telegram.telegrambots.api.objects.replykeyboard.buttons.InlineKeyboardButton
+import org.telegram.telegrambots.meta.api.objects.Update
+import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup
+import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboard
+import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardButton
 import ru.scratty.db.User
 
 class SelectGroupCommand: Command("сменить группу|изменить группу|выбрать группу|group".toRegex()) {

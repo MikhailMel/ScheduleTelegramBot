@@ -6,7 +6,7 @@ import org.litote.kmongo.KMongo
 import org.litote.kmongo.getCollection
 import org.litote.kmongo.updateOne
 
-class DBHandlerMongo : DBHandler {
+class DBHandlerMongo private constructor() : DBHandler  {
 
     private object Holder {
         val INSTANCE = DBHandlerMongo()

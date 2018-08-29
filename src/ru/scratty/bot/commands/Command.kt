@@ -1,9 +1,9 @@
 package ru.scratty.bot.commands
 
-import org.telegram.telegrambots.api.objects.Update
-import org.telegram.telegrambots.api.objects.replykeyboard.ReplyKeyboard
-import org.telegram.telegrambots.api.objects.replykeyboard.ReplyKeyboardMarkup
-import org.telegram.telegrambots.api.objects.replykeyboard.buttons.KeyboardRow
+import org.telegram.telegrambots.meta.api.objects.Update
+import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboard
+import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMarkup
+import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardRow
 import ru.scratty.db.DBHandler
 import ru.scratty.db.DBHandlerMongo
 import ru.scratty.db.User

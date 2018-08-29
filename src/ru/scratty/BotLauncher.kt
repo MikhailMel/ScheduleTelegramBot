@@ -1,7 +1,7 @@
 package ru.scratty
 
 import org.telegram.telegrambots.ApiContextInitializer
-import org.telegram.telegrambots.TelegramBotsApi
+import org.telegram.telegrambots.meta.TelegramBotsApi
 import ru.scratty.bot.ScheduleBot
 
 object BotLauncher {
