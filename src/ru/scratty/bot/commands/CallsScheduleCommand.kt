@@ -1,7 +1,7 @@
 package ru.scratty.bot.commands
 
 import org.telegram.telegrambots.meta.api.objects.Update
-import ru.scratty.db.User
+import ru.scratty.mongo.models.User
 
 class CallsScheduleCommand: Command("звонки|звонок".toRegex()) {
 

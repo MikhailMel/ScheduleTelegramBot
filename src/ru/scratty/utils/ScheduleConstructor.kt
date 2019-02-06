@@ -1,20 +1,20 @@
 package ru.scratty.utils
 
-import ru.scratty.db.Group
+import ru.scratty.mongo.models.Lesson
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.Calendar.*
 
-class ScheduleConstructor(val group: Group) {
+class ScheduleConstructor(private val lessons: List<Lesson>) {
 
     private fun getDaySchedule(calendar: Calendar): String {
         var sb = StringBuilder()
 
         var count = 0
-        var flag = true;
+        var flag = true
 
         loop@for (i in 1..6) {
-            for(lesson in group.lessons) {
+            for(lesson in lessons) {
                 if (lesson.check(calendar, i)) {
                     sb.appendln(String.format("%d) %s (%s/%s)", i, lesson.name, lesson.type, lesson.audience))
 
@@ -91,7 +91,3 @@ class ScheduleConstructor(val group: Group) {
         }
     }
 }
-
-/*
-
- */

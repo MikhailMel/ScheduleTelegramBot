@@ -1,28 +1,28 @@
 package ru.scratty.bot.notifications
 
-import ru.scratty.db.DBHandlerMongo
+import ru.scratty.mongo.DBService
 import java.util.*
 
 class LessonNotification(time: Time, private val numberLesson: Int,
                          private val send: (chatId: Long, text: String) -> Unit): Notification(time) {
 
     override fun execute() {
-        val db = DBHandlerMongo.INSTANCE
-        val users = db.getUsers()
+        val dbService = DBService.INSTANCE
+        val users = dbService.getAllUsers()
         val calendar = GregorianCalendar()
 
-        users.forEach {
-            if (it.settings[0] == '1') {
-                val group = db.getGroup(it.groupId)
-                val user = it
+        users.forEach { user ->
+            if (user.settings[0] == '1') {
+                val group = dbService.getGroup(user.groupId)
 
-                group.lessons.forEach {
-                    if (it.check(calendar, numberLesson)) {
+                val lessons = dbService.getLessons(group.lessons)
+                lessons.forEach { lesson ->
+                    if (lesson.check(calendar, numberLesson)) {
                         val sb = StringBuilder()
                                 .appendln("Следующая пара:")
-                                .appendln(String.format("%s (%s/%s)", it.name, it.type, it.audience))
+                                .appendln(String.format("%s (%s/%s)", lesson.name, lesson.type, lesson.audience))
 
-                        send(user._id, sb.toString())
+                        send(user.id, sb.toString())
                     }
                 }
             }

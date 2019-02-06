@@ -4,13 +4,12 @@ import org.telegram.telegrambots.meta.api.objects.Update
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboard
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMarkup
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardRow
-import ru.scratty.db.DBHandler
-import ru.scratty.db.DBHandlerMongo
-import ru.scratty.db.User
+import ru.scratty.mongo.DBService
+import ru.scratty.mongo.models.User
 
 abstract class Command(private val containsWords: Regex) {
 
-    protected var db: DBHandler = DBHandlerMongo.INSTANCE
+    protected val dbService = DBService.INSTANCE
     protected var text: String = ""
 
     var isUpdate = false

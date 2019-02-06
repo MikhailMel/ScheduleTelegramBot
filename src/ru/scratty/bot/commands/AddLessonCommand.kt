@@ -1,14 +1,14 @@
 package ru.scratty.bot.commands
 
 import org.telegram.telegrambots.meta.api.objects.Update
-import ru.scratty.db.Lesson
-import ru.scratty.db.User
+import ru.scratty.mongo.models.Lesson
+import ru.scratty.mongo.models.User
 import java.util.*
 
 class AddLessonCommand: Command("/пара|/урок".toRegex()) {
 
     override fun handleCommand(update: Update, user: User): String {
-        if (db.getGroup(user.groupId).authorId != user._id) {
+        if (dbService.getGroup(user.groupId).authorId != user.id) {
             return "У вас нет прав на редактирование рассписания этой группы"
         }
 
@@ -35,18 +35,19 @@ class AddLessonCommand: Command("/пара|/урок".toRegex()) {
                 lesson.audience = args[4]
                 lesson.type = args[5]
 
-                val group = db.getGroup(user.groupId)
-                group.lessons.forEach {
+                val group = dbService.getGroup(user.groupId)
+                dbService.getLessons(group.lessons).forEach {
                     if (it.weeks == lesson.weeks &&
                             it.typeWeek == lesson.typeWeek &&
                             it.dayNumber == lesson.dayNumber &&
                             it.number == lesson.number) {
-                        group.lessons.remove(it)
+                        group.lessons.remove(it.id.toHexString())
                     }
                 }
 
-                group.lessons.add(lesson)
-                db.updateGroup(group)
+                val lessonId = dbService.addLesson(lesson)
+                group.lessons.add(lessonId)
+                dbService.editGroup(group)
 
                 return "Предмет успешно сохранен"
             }

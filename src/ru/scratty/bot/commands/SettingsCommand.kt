@@ -4,7 +4,7 @@ import org.telegram.telegrambots.meta.api.objects.Update
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboard
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardButton
-import ru.scratty.db.User
+import ru.scratty.mongo.models.User
 
 class SettingsCommand: Command("настройки|notification".toRegex()) {
 
@@ -16,13 +16,13 @@ class SettingsCommand: Command("настройки|notification".toRegex()) {
 
             user.settings = user.settings.replaceRange(num, num + 1,
                     Math.abs(user.settings[num].toString().toInt() - 1).toString())
-            db.updateUser(user)
+            dbService.editUser(user)
 
             isUpdate = false
         }
 
         settings = user.settings
-        val group = db.getGroup(user.groupId)
+        val group = dbService.getGroup(user.groupId)
 
         val sb = StringBuilder()
         sb.appendln("Настройки")

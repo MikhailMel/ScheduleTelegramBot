@@ -9,16 +9,18 @@ import org.telegram.telegrambots.meta.api.objects.Update
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboard
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException
+import ru.scratty.BotConfig
 import ru.scratty.bot.commands.*
 import ru.scratty.bot.notifications.LessonNotification
-import ru.scratty.db.DBHandlerMongo
+import ru.scratty.mongo.DBService
+import ru.scratty.mongo.models.User
 import ru.scratty.utils.Config
 import java.text.SimpleDateFormat
 import java.util.*
 
 class ScheduleBot : TelegramLongPollingBot() {
 
-    private val db = DBHandlerMongo.INSTANCE
+    private val dbService = DBService.INSTANCE
 
     private val commands = arrayListOf(SelectGroupCommand(), DayScheduleCommand(), CreateGroupCommand(),
             AddLessonCommand(), WeekScheduleCommand(), CallsScheduleCommand(), SettingsCommand(), SendMessageById())
@@ -29,9 +31,9 @@ class ScheduleBot : TelegramLongPollingBot() {
         }
     }
 
-    override fun getBotToken() = ""
+    override fun getBotToken() = BotConfig.BOT_TOKEN
 
-    override fun getBotUsername() = ""
+    override fun getBotUsername() = BotConfig.BOT_USERNAME
 
     override fun onUpdateReceived(update: Update?) {
         if (update!!.hasMessage())
@@ -42,14 +44,15 @@ class ScheduleBot : TelegramLongPollingBot() {
 
         val chatId = if (update.hasMessage()) update.message.chatId else update.callbackQuery.message.chatId
 
-        if (!db.userIsExists(chatId)) {
-            db.addUser(chatId, update.message.chat.firstName + " " + update.message.chat.lastName)
+        if (!dbService.userIsExists(chatId)) {
+            val user = User(chatId, update.message.chat.firstName + " " + update.message.chat.lastName, update.message.chat.userName)
+            dbService.addUser(user)
 
             val selectGroup = SelectGroupCommand()
-            sendMsg(chatId, selectGroup.handleCommand(update, db.getUser(chatId)), selectGroup.getKeyboard())
+            sendMsg(chatId, selectGroup.handleCommand(update, user), selectGroup.getKeyboard())
         }
 
-        val user = db.getUser(chatId)
+        val user = dbService.getUser(chatId)
 
         for (command in commands) {
             if (command.checkCommand(update)) {
@@ -146,5 +149,4 @@ class ScheduleBot : TelegramLongPollingBot() {
         println("Text:\n ${callbackQuery.message.text}")
         println("Data:\n ${callbackQuery.data}")
     }
-
 }

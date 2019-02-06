@@ -4,7 +4,7 @@ import org.telegram.telegrambots.meta.api.objects.Update
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboard
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardButton
-import ru.scratty.db.User
+import ru.scratty.mongo.models.User
 import ru.scratty.utils.ScheduleConstructor
 
 class WeekScheduleCommand: Command("неделя|week".toRegex()) {
@@ -15,11 +15,21 @@ class WeekScheduleCommand: Command("неделя|week".toRegex()) {
         return if (isUpdate) {
             incrementWeek = update.callbackQuery.data.replace("неделя_|week_".toRegex(), "").toInt()
 
-            ScheduleConstructor(db.getGroup(user.groupId)).getWeekSchedule(incrementWeek)
+            if (user.groupId.isNotEmpty()) {
+                val lessons = dbService.getLessons(dbService.getGroup(user.groupId).lessons)
+                ScheduleConstructor(lessons).getWeekSchedule(incrementWeek)
+            } else {
+                "Сначала нужно выбрать группу"
+            }
         } else {
             incrementWeek = 0
 
-            ScheduleConstructor(db.getGroup(user.groupId)).getWeekSchedule(0)
+            if (user.groupId.isNotEmpty()) {
+                val lessons = dbService.getLessons(dbService.getGroup(user.groupId).lessons)
+                ScheduleConstructor(lessons).getWeekSchedule(0)
+            } else {
+                "Сначала нужно выбрать группу"
+            }
         }
     }
 
