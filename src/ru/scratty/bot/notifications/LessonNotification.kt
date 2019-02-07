@@ -1,9 +1,11 @@
 package ru.scratty.bot.notifications
 
 import ru.scratty.mongo.DBService
+import ru.scratty.utils.filterByCalendarAndLessonNumber
 import java.util.*
 
-class LessonNotification(time: Time, private val numberLesson: Int,
+class LessonNotification(time: Time,
+                         private val numberLesson: Int,
                          private val send: (chatId: Long, text: String) -> Unit): Notification(time) {
 
     override fun execute() {
@@ -15,16 +17,15 @@ class LessonNotification(time: Time, private val numberLesson: Int,
             if (user.settings[0] == '1') {
                 val group = dbService.getGroup(user.groupId)
 
-                val lessons = dbService.getLessons(group.lessons)
-                lessons.forEach { lesson ->
-                    if (lesson.check(calendar, numberLesson)) {
-                        val sb = StringBuilder()
-                                .appendln("Следующая пара:")
-                                .appendln(String.format("%s (%s/%s)", lesson.name, lesson.type, lesson.audience))
+                dbService.getLessons(group.lessons)
+                        .filterByCalendarAndLessonNumber(calendar, numberLesson)
+                        .forEach {
+                            val sb = StringBuilder()
+                                    .appendln("Следующая пара:")
+                                    .appendln(String.format("%s (%s/%s)", it.name, it.type, it.audience))
 
-                        send(user.id, sb.toString())
-                    }
-                }
+                            send(user.id, sb.toString())
+                        }
             }
         }
     }

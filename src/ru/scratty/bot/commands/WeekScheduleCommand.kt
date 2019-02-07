@@ -4,8 +4,8 @@ import org.telegram.telegrambots.meta.api.objects.Update
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboard
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardButton
+import ru.scratty.ScheduleConstructor
 import ru.scratty.mongo.models.User
-import ru.scratty.utils.ScheduleConstructor
 
 class WeekScheduleCommand: Command("неделя|week".toRegex()) {
 

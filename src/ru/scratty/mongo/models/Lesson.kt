@@ -14,8 +14,8 @@ data class Lesson(@BsonId var id: ObjectId = ObjectId(),
                   var audience: String = "",
                   var type: String = "") {
 
-    fun check(calendar: Calendar, number: Int): Boolean {
-        if (number == this.number && calendar.get(Calendar.DAY_OF_WEEK) == dayNumber) {
+    fun check(calendar: Calendar): Boolean {
+        if (calendar.get(Calendar.DAY_OF_WEEK) == dayNumber) {
             if (weeks.size == 0) {
                 if ((calendar.get(Calendar.WEEK_OF_YEAR) - Config.WEEKS_SHIFT) % 2 == typeWeek % 2) {
                     return true

@@ -20,7 +20,7 @@ class AddLessonCommand: Command("/пара|/урок".toRegex()) {
             if (args.size == 6) {
                 val lesson = Lesson()
 
-                lesson.name = args[0]
+                lesson.name = args[0].trim()
 
                 if (args[1].contains(",")) {
                     args[1].split(",").forEach {

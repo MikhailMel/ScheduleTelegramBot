@@ -1,6 +1,8 @@
-package ru.scratty.utils
+package ru.scratty
 
 import ru.scratty.mongo.models.Lesson
+import ru.scratty.utils.Config
+import ru.scratty.utils.filterByCalendar
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.Calendar.*
@@ -9,23 +11,16 @@ class ScheduleConstructor(private val lessons: List<Lesson>) {
 
     private fun getDaySchedule(calendar: Calendar): String {
         var sb = StringBuilder()
-
-        var count = 0
         var flag = true
 
-        loop@for (i in 1..6) {
-            for(lesson in lessons) {
-                if (lesson.check(calendar, i)) {
-                    sb.appendln(String.format("%d) %s (%s/%s)", i, lesson.name, lesson.type, lesson.audience))
+        val filteredLessons = lessons.filterByCalendar(calendar)
+        for (i in 1..6) {
+            val lesson = filteredLessons.find { it.number == i }
+            if (lesson != null) {
+                sb.appendln(String.format("%d) %s (%s/%s)", i, lesson.name, lesson.type, lesson.audience))
 
-                    count++
-                    flag = false
-
-                    continue@loop
-                }
-            }
-            if (count != i) {
-                count++
+                flag = false
+            } else {
                 sb.appendln(String.format("%d)", i))
             }
         }
