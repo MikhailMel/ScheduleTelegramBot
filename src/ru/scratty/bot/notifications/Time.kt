@@ -2,7 +2,8 @@ package ru.scratty.bot.notifications
 
 import java.util.*
 
-class Time(private val hour: Int, private val minute: Int) {
+data class Time(val hour: Int,
+                val minute: Int) {
 
     private var sent = false
 

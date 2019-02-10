@@ -9,25 +9,16 @@ import java.util.Calendar.*
 
 class ScheduleConstructor(private val lessons: List<Lesson>) {
 
-    private fun getDaySchedule(calendar: Calendar): String {
-        var sb = StringBuilder()
-        var flag = true
+    fun getDaySchedule(number: Int): String {
+        val calendar = GregorianCalendar.getInstance(Locale("ru", "RU"))
+        calendar.set(DAY_OF_YEAR, number)
 
-        val filteredLessons = lessons.filterByCalendar(calendar)
-        for (i in 1..6) {
-            val lesson = filteredLessons.find { it.number == i }
-            if (lesson != null) {
-                sb.appendln(String.format("%d) %s (%s/%s)", i, lesson.name, lesson.type, lesson.audience))
+        val format = SimpleDateFormat("dd.MM.yy")
 
-                flag = false
-            } else {
-                sb.appendln(String.format("%d)", i))
-            }
-        }
-
-        if (flag) {
-            sb = StringBuilder("В этот день пар нет\n")
-        }
+        val sb = StringBuilder()
+        sb.append(format.format(calendar.time))
+        sb.appendln(':')
+        sb.append(getDaySchedule(calendar))
 
         return sb.toString()
     }
@@ -68,6 +59,29 @@ class ScheduleConstructor(private val lessons: List<Lesson>) {
             sb.append(getDaySchedule(calendar))
             sb.append("\n")
             calendar.add(DAY_OF_WEEK, 1)
+        }
+
+        return sb.toString()
+    }
+
+    private fun getDaySchedule(calendar: Calendar): String {
+        var sb = StringBuilder()
+        var flag = true
+
+        val filteredLessons = lessons.filterByCalendar(calendar)
+        for (i in 1..6) {
+            val lesson = filteredLessons.find { it.number == i }
+            if (lesson != null) {
+                sb.appendln(String.format("%d) %s (%s/%s)", i, lesson.name, lesson.type, lesson.audience))
+
+                flag = false
+            } else {
+                sb.appendln(String.format("%d)", i))
+            }
+        }
+
+        if (flag) {
+            sb = StringBuilder("В этот день пар нет\n")
         }
 
         return sb.toString()
