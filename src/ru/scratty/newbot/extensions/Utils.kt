@@ -5,10 +5,11 @@ import org.telegram.telegrambots.meta.api.methods.updatingmessages.EditMessageTe
 import org.telegram.telegrambots.meta.api.objects.Message
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboard
+import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMarkup
 import org.telegram.telegrambots.meta.bots.AbsSender
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException
 
-fun sendMessage(sender: AbsSender, chatId: Long, text: String, replyKeyboard: ReplyKeyboard = ReplyKeyboard {}) {
+fun sendMessage(sender: AbsSender, chatId: Long, text: String, replyKeyboard: ReplyKeyboard = ReplyKeyboardMarkup()) {
     val sendMessage = SendMessage().apply {
         enableMarkdown(true)
         this.chatId = chatId.toString()
@@ -23,12 +24,12 @@ fun sendMessage(sender: AbsSender, chatId: Long, text: String, replyKeyboard: Re
     }
 }
 
-fun updateMessage(sender: AbsSender, message: Message, text: String, replyKeyboard: ReplyKeyboard = ReplyKeyboard {}) {
+fun updateMessage(sender: AbsSender, message: Message, text: String, replyKeyboard: InlineKeyboardMarkup = InlineKeyboardMarkup()) {
     val editMessage = EditMessageText().apply {
         chatId = message.chatId.toString()
         messageId = message.messageId
         this.text = text
-        replyMarkup = replyKeyboard as InlineKeyboardMarkup
+        replyMarkup = replyKeyboard
     }
 
     try {

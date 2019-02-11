@@ -3,7 +3,6 @@ package ru.scratty.newbot.commands
 import org.telegram.telegrambots.meta.api.objects.CallbackQuery
 import org.telegram.telegrambots.meta.api.objects.Message
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup
-import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboard
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardButton
 import org.telegram.telegrambots.meta.bots.AbsSender
 import ru.scratty.mongo.DBService
@@ -45,11 +44,11 @@ class SettingsCommand(private val dbService: DBService) : Command(Regex("нас�
     }.toString()
 
 
-    private fun getKeyboard(settings: String): ReplyKeyboard {
+    private fun getKeyboard(settings: String): InlineKeyboardMarkup {
         val keyboardMarkup = InlineKeyboardMarkup()
         val rows = ArrayList<ArrayList<InlineKeyboardButton>>()
 
-        rows.add(arrayListOf(InlineKeyboardButton("Изменить группу").setCallbackData("groups")))
+        rows.add(arrayListOf(InlineKeyboardButton("Сменить группу").setCallbackData("select_group")))
         rows.add(arrayListOf(InlineKeyboardButton((if (settings[0] == '1') "Выключить" else "Включить") + " уведомления перед парами").setCallbackData("notification_0")))
         rows.add(arrayListOf(InlineKeyboardButton((if (settings[1] == '1') "Выключить" else "Включить") + " уведомления о сегодняшнем расписании").setCallbackData("notification_1")))
         rows.add(arrayListOf(InlineKeyboardButton((if (settings[2] == '1') "Выключить" else "Включить") + " уведомления о завтрашнем расписании").setCallbackData("notification_2")))

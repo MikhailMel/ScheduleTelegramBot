@@ -3,7 +3,6 @@ package ru.scratty.newbot.commands
 import org.telegram.telegrambots.meta.api.objects.CallbackQuery
 import org.telegram.telegrambots.meta.api.objects.Message
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup
-import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboard
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardButton
 import org.telegram.telegrambots.meta.bots.AbsSender
 import ru.scratty.ScheduleConstructor
@@ -75,7 +74,7 @@ class ScheduleCommand(private val dbService: DBService):
         updateMessage(sender, callbackQuery.message, schedule, getKeyboard(prefix, increment))
     }
 
-    private fun getKeyboard(prefix: String, increment: Int): ReplyKeyboard {
+    private fun getKeyboard(prefix: String, increment: Int): InlineKeyboardMarkup {
         val keyboardMarkup = InlineKeyboardMarkup()
         val rows = ArrayList<ArrayList<InlineKeyboardButton>>()
         val row = ArrayList<InlineKeyboardButton>()

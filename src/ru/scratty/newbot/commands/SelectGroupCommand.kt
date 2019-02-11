@@ -20,6 +20,11 @@ class SelectGroupCommand(private val dbService: DBService):
     }
 
     override fun handleCallbackMessage(sender: AbsSender, callbackQuery: CallbackQuery) {
+        if (callbackQuery.data == "select_group") {
+            sendMessage(sender, callbackQuery.message.chatId, "Выберите вашу группу:", getKeyboard())
+            return
+        }
+
         val newGroupId = callbackQuery.data.replace("group_", "")
         val user = dbService.getUser(callbackQuery.message.chatId)
 
