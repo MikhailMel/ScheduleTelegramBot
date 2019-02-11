@@ -9,6 +9,7 @@ import org.telegram.telegrambots.meta.bots.AbsSender
 import ru.scratty.ScheduleConstructor
 import ru.scratty.mongo.DBService
 import ru.scratty.newbot.extensions.*
+import java.util.*
 
 class ScheduleCommand(private val dbService: DBService):
         Command(Regex("день|сегодня|завтра|day|неделя|week")),
@@ -30,18 +31,24 @@ class ScheduleCommand(private val dbService: DBService):
         val range = message.text.toLowerCase().trim()
 
         val text: String
-        var prefix = "day"
-        var increment = 0
+        val prefix: String
+        val increment: Int
 
         when {
-            range.contains("день|сегодня|day".toRegex()) -> text = scheduleConstructor.getTodaySchedule()
+            range.contains("день|сегодня|day".toRegex()) -> {
+                text = scheduleConstructor.getTodaySchedule()
+                prefix = "day"
+                increment = getDayNumber()
+            }
             range.contains("завтра".toRegex()) -> {
                 text = scheduleConstructor.getTomorrowSchedule()
-                increment = 1
+                prefix = "day"
+                increment = getDayNumber() + 1
             }
             else -> {
                 text = scheduleConstructor.getWeekSchedule(0)
                 prefix = "week"
+                increment = 0
             }
         }
 
@@ -49,7 +56,6 @@ class ScheduleCommand(private val dbService: DBService):
     }
 
     override fun handleCallbackMessage(sender: AbsSender, callbackQuery: CallbackQuery) {
-        println(callbackQuery.data)
         val user = dbService.getUser(callbackQuery.message.chatId)
         val group = dbService.getGroup(user.groupId)
         val lessons = dbService.getLessons(group.lessons)
@@ -84,4 +90,6 @@ class ScheduleCommand(private val dbService: DBService):
 
         return keyboardMarkup
     }
+
+    private fun getDayNumber(): Int = GregorianCalendar().get(Calendar.DAY_OF_YEAR)
 }

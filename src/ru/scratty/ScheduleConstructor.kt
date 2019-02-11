@@ -16,8 +16,7 @@ class ScheduleConstructor(private val lessons: List<Lesson>) {
         val format = SimpleDateFormat("dd.MM.yy")
 
         val sb = StringBuilder()
-        sb.append(format.format(calendar.time))
-        sb.appendln(':')
+        sb.append(getDayName(calendar.get(DAY_OF_WEEK))).append(" (${format.format(calendar.time)})").append(":\n")
         sb.append(getDaySchedule(calendar))
 
         return sb.toString()
