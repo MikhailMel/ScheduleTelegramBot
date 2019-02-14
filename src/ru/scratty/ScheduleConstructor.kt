@@ -3,6 +3,7 @@ package ru.scratty
 import ru.scratty.mongo.models.Lesson
 import ru.scratty.utils.Config
 import ru.scratty.utils.filterByCalendar
+import ru.scratty.utils.getDayName
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.Calendar.*
@@ -86,16 +87,16 @@ class ScheduleConstructor(private val lessons: List<Lesson>) {
         return sb.toString()
     }
 
-    private fun getDayName(day: Int): String {
-        return when (day) {
-            MONDAY -> "Понедельник"
-            TUESDAY -> "Вторник"
-            WEDNESDAY -> "Среда"
-            THURSDAY -> "Четверг"
-            FRIDAY -> "Пятница"
-            SATURDAY -> "Суббота"
-            SUNDAY -> "Воскресенье"
-            else -> ""
-        }
-    }
+//    private fun getDayName(day: Int): String {
+//        return when (day) {
+//            MONDAY -> "Понедельник"
+//            TUESDAY -> "Вторник"
+//            WEDNESDAY -> "Среда"
+//            THURSDAY -> "Четверг"
+//            FRIDAY -> "Пятница"
+//            SATURDAY -> "Суббота"
+//            SUNDAY -> "Воскресенье"
+//            else -> ""
+//        }
+//    }
 }

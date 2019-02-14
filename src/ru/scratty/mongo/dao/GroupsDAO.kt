@@ -40,9 +40,4 @@ class GroupsDAO(db: MongoDatabase): AbstractDAO<Group, ObjectId>(db, BotConfig.C
         val iter = collection.find(eq("name", name))
         return iter.first() ?: Group()
     }
-
-//    fun groupIsExistsByName(name: String): Boolean {
-//        val iter = collection.find(eq("name", name))
-//        return iter.count() > 0
-//    }
 }

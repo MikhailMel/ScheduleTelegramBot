@@ -91,4 +91,6 @@ class DBService private constructor() {
     }
 
     fun getLessons(ids: List<String>) = lessonsDAO.findAll().filter { ids.contains(it.id.toHexString()) }
+
+    fun getLesson(id: String) = lessonsDAO.findOne(ObjectId(id))
 }

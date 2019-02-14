@@ -19,7 +19,7 @@ class SettingsCommand(private val dbService: DBService) : Command(Regex("нас�
         val user = dbService.getUser(message.chatId)
         val group = dbService.getGroup(user.groupId)
 
-        sendMessage(sender, message.chatId, createMsg(user, group), getKeyboard(user.settings))
+        sendMessage(sender, message.chatId, createMsg(user, group), getKeyboard(user.settings, group.authorId == user.id))
     }
 
     override fun handleCallbackMessage(sender: AbsSender, callbackQuery: CallbackQuery) {
@@ -32,7 +32,7 @@ class SettingsCommand(private val dbService: DBService) : Command(Regex("нас�
                 Math.abs(user.settings[notificationNumber].toString().toInt() - 1).toString())
         dbService.editUser(user)
 
-        updateMessage(sender, callbackQuery.message, createMsg(user, group), getKeyboard(user.settings))
+        updateMessage(sender, callbackQuery.message, createMsg(user, group), getKeyboard(user.settings, group.authorId == user.id))
     }
 
     private fun createMsg(user: User, group: Group) = StringBuilder().apply {
@@ -44,11 +44,16 @@ class SettingsCommand(private val dbService: DBService) : Command(Regex("нас�
     }.toString()
 
 
-    private fun getKeyboard(settings: String): InlineKeyboardMarkup {
+    private fun getKeyboard(settings: String, isGroupOwner: Boolean): InlineKeyboardMarkup {
         val keyboardMarkup = InlineKeyboardMarkup()
         val rows = ArrayList<ArrayList<InlineKeyboardButton>>()
 
         rows.add(arrayListOf(InlineKeyboardButton("Сменить группу").setCallbackData("select_group")))
+
+        if (isGroupOwner) {
+            rows.add(arrayListOf(InlineKeyboardButton("Редактировать расписание").setCallbackData("edit_group")))
+        }
+
         rows.add(arrayListOf(InlineKeyboardButton((if (settings[0] == '1') "Выключить" else "Включить") + " уведомления перед парами").setCallbackData("notification_0")))
         rows.add(arrayListOf(InlineKeyboardButton((if (settings[1] == '1') "Выключить" else "Включить") + " уведомления о сегодняшнем расписании").setCallbackData("notification_1")))
         rows.add(arrayListOf(InlineKeyboardButton((if (settings[2] == '1') "Выключить" else "Включить") + " уведомления о завтрашнем расписании").setCallbackData("notification_2")))

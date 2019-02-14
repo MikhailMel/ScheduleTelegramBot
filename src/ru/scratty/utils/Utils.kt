@@ -27,3 +27,14 @@ fun List<Lesson>.filterByCalendarAndLessonNumber(calendar: Calendar, number: Int
         false
     }
 }
+
+fun getDayName(num: Int) = when (num) {
+    Calendar.MONDAY -> "Понедельник"
+    Calendar.TUESDAY -> "Вторник"
+    Calendar.WEDNESDAY -> "Среда"
+    Calendar.THURSDAY -> "Четверг"
+    Calendar.FRIDAY -> "Пятница"
+    Calendar.SATURDAY -> "Суббота"
+    Calendar.SUNDAY -> "Воскресенье"
+    else -> ""
+}
